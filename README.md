@@ -1,8 +1,8 @@
-[![Actions Status](https://github.com/filipdutescu/modern-cpp-template/workflows/MacOS/badge.svg)](https://github.com/filipdutescu/modern-cpp-template/actions)
-[![Actions Status](https://github.com/filipdutescu/modern-cpp-template/workflows/Windows/badge.svg)](https://github.com/filipdutescu/modern-cpp-template/actions)
-[![Actions Status](https://github.com/filipdutescu/modern-cpp-template/workflows/Ubuntu/badge.svg)](https://github.com/filipdutescu/modern-cpp-template/actions)
-[![codecov](https://codecov.io/gh/filipdutescu/modern-cpp-template/branch/master/graph/badge.svg)](https://codecov.io/gh/filipdutescu/modern-cpp-template)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/filipdutescu/modern-cpp-template)](https://github.com/filipdutescu/modern-cpp-template/releases)
+[![Actions Status](https://github.com/chronoinferna/obxx/workflows/MacOS/badge.svg)](https://github.com/chronoinferna/obxx/actions)
+[![Actions Status](https://github.com/chronoinferna/obxx/workflows/Windows/badge.svg)](https://github.com/chronoinferna/obxx/actions)
+[![Actions Status](https://github.com/chronoinferna/obxx/workflows/Ubuntu/badge.svg)](https://github.com/chronoinferna/obxx/actions)
+[![codecov](https://codecov.io/gh/chronoinferna/obxx/branch/master/graph/badge.svg)](https://codecov.io/gh/chronoinferna/obxx)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/chronoinferna/obxx)](https://github.com/chronoinferna/obxx/releases)
 
 # Modern C++ Template
 
@@ -15,42 +15,42 @@ is greatly appreciated!
 
 ## Features
 
-* Modern **CMake** configuration and project, which, to the best of my
-knowledge, uses the best practices,
+- Modern **CMake** configuration and project, which, to the best of my
+  knowledge, uses the best practices,
 
-* An example of a **Clang-Format** config, inspired from the base *Google* model,
-with minor tweaks. This is aimed only as a starting point, as coding style
-is a subjective matter, everyone is free to either delete it (for the *LLVM*
-default) or supply their own alternative,
+- An example of a **Clang-Format** config, inspired from the base _Google_ model,
+  with minor tweaks. This is aimed only as a starting point, as coding style
+  is a subjective matter, everyone is free to either delete it (for the _LLVM_
+  default) or supply their own alternative,
 
-* **Static analyzers** integration, with *Clang-Tidy* and *Cppcheck*, the former
-being the default option,
+- **Static analyzers** integration, with _Clang-Tidy_ and _Cppcheck_, the former
+  being the default option,
 
-* **Doxygen** support, through the `ENABLE_DOXYGEN` option, which you can enable
-if you wish to use it,
+- **Doxygen** support, through the `ENABLE_DOXYGEN` option, which you can enable
+  if you wish to use it,
 
-* **Unit testing** support, through *GoogleTest* (with an option to enable
-*GoogleMock*) or *Catch2*,
+- **Unit testing** support, through _GoogleTest_ (with an option to enable
+  _GoogleMock_) or _Catch2_,
 
-* **Code coverage**, enabled by using the `ENABLE_CODE_COVERAGE` option, through
-*Codecov* CI integration,
+- **Code coverage**, enabled by using the `ENABLE_CODE_COVERAGE` option, through
+  _Codecov_ CI integration,
 
-* **Package manager support**, with *Conan* and *Vcpkg*, through their respective
-options
+- **Package manager support**, with _Conan_ and _Vcpkg_, through their respective
+  options
 
-* **CI workflows for Windows, Linux and MacOS** using *GitHub Actions*, making
-use of the caching features, to ensure minimum run time,
+- **CI workflows for Windows, Linux and MacOS** using _GitHub Actions_, making
+  use of the caching features, to ensure minimum run time,
 
-* **.md templates** for: *README*, *Contributing Guideliness*,
-*Issues* and *Pull Requests*,
+- **.md templates** for: _README_, _Contributing Guideliness_,
+  _Issues_ and _Pull Requests_,
 
-* **Permissive license** to allow you to integrate it as easily as possible. The
-template is licensed under the [Unlicense](https://unlicense.org/),
+- **Permissive license** to allow you to integrate it as easily as possible. The
+  template is licensed under the [Unlicense](https://unlicense.org/),
 
-* Options to build as a header-only library or executable, not just a static or
-shared library.
+- Options to build as a header-only library or executable, not just a static or
+  shared library.
 
-* **Ccache** integration, for speeding up rebuild times
+- **Ccache** integration, for speeding up rebuild times
 
 ## Getting Started
 
@@ -61,85 +61,44 @@ machine for development and testing purposes.
 
 This project is meant to be only a template, thus versions of the software used
 can be change to better suit the needs of the developer(s). If you wish to use the
-template *as-is*, meaning using the versions recommended here, then you will need:
+template _as-is_, meaning using the versions recommended here, then you will need:
 
-* **CMake v3.15+** - found at [https://cmake.org/](https://cmake.org/)
+- **CMake v3.15+** - found at [https://cmake.org/](https://cmake.org/)
 
-* **C++ Compiler** - needs to support at least the **C++17** standard, i.e. *MSVC*,
-*GCC*, *Clang*
+- **C++ Compiler** - needs to support at least the **C++23** standard
+  _GCC_, _Clang_
 
-> ***Note:*** *You also need to be able to provide ***CMake*** a supported
-[generator](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html).*
+> **_Note:_** \*You also need to be able to provide **_CMake_** a supported
+> [generator](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html).\*
 
 ### Installing
 
 It is fairly easy to install the project, all you need to do is clone if from
-[GitHub](https://github.com/filipdutescu/modern-cpp-template) or
-[generate a new repository from it](https://github.com/filipdutescu/modern-cpp-template/generate)
+[GitHub](https://github.com/chronoinferna/obxx) or
+[generate a new repository from it](https://github.com/chronoinferna/obxx/generate)
 (also on **GitHub**).
 
 If you wish to clone the repository, rather than generate from it, you simply need
 to run:
 
 ```bash
-git clone https://github.com/filipdutescu/modern-cpp-template/
-```
-
-After finishing getting a copy of the project, with any of the methods above, create
-a new folder in the `include/` folder, with the name of your project.  Edit
-`cmake/SourcesAndHeaders.cmake` to add your files.
-
-You will also need to rename the `cmake/ProjectConfig.cmake.in` file to start with
-the ***exact name of your project***. Such as `cmake/MyNewProjectConfig.cmake.in`.
-You should also make the same changes in the GitHub workflows provided, notably
-[`.github/workflows/ubuntu.yml`](.github/workflows/ubuntu.yml), in which you should
-replace the CMake option `-DProject_ENABLE_CODE_COVERAGE=1` to
-`-DMyNewProject_ENABLE_CODE_COVERAGE=1`.
-
-Finally, change `"Project"` from `CMakeLists.txt`, from
-
-```cmake
-project(
-  "Project"
-  VERSION 0.1.0
-  LANGUAGES CXX
-)
-```
-
-to the ***exact name of your project***, i.e. using the previous name it will become:
-
-```cmake
-project(
-  MyNewProject
-  VERSION 0.1.0
-  LANGUAGES CXX
-)
-```
-
-To install an already built project, you need to run the `install` target with CMake.
-For example:
-
-```bash
-cmake --build build --target install --config Release
-
-# a more general syntax for that command is:
-cmake --build <build_directory> --target install --config <desired_config>
+git clone https://github.com/chronoinferna/obxx/
 ```
 
 ## Building the project
 
-To build the project, all you need to do, ***after correctly
-[installing the project](README.md#Installing)***, is run a similar **CMake** routine
+To build the project, all you need to do, **_after correctly
+[installing the project](README.md#Installing)_**, is run a similar **CMake** routine
 to the the one below:
 
 ```bash
 mkdir build/ && cd build/
 cmake .. -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
-cmake --build . --target install
+cmake --build . --target install --config <configuration>
 ```
 
-> ***Note:*** *The custom ``CMAKE_INSTALL_PREFIX`` can be omitted if you wish to
-install in [the default install location](https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html).*
+> **_Note:_** _The custom `CMAKE_INSTALL_PREFIX` can be omitted if you wish to
+> install in [the default install location](https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html)._
 
 More options that you can set for the project can be found in the
 [`cmake/StandardSettings.cmake` file](cmake/StandardSettings.cmake). For certain
@@ -158,7 +117,7 @@ cmake .. -D<project_name>_ENABLE_DOXYGEN=1 -DCMAKE_INSTALL_PREFIX=/absolute/path
 cmake --build . --target doxygen-docs
 ```
 
-> ***Note:*** *This will generate a `docs/` directory in the **project's root directory**.*
+> **_Note:_** _This will generate a `docs/` directory in the **project's root directory**._
 
 ## Running the tests
 
@@ -177,14 +136,6 @@ ctest -C Release  # or `ctest -C Debug` or any other configuration you wish to t
 #GoogleTest output as well)
 ```
 
-### End to end tests
-
-If applicable, should be presented here.
-
-### Coding style tests
-
-If applicable, should be presented here.
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our how you can
@@ -194,11 +145,11 @@ become a contributor and the process for submitting pull requests to us.
 
 This project makes use of [SemVer](http://semver.org/) for versioning. A list of
 existing versions can be found in the
-[project's releases](https://github.com/filipdutescu/modern-cpp-template/releases).
+[project's releases](https://github.com/chronoinferna/obxx/releases).
 
 ## Authors
 
-* **Filip-Ioan Dutescu** - [@filipdutescu](https://github.com/filipdutescu)
+- **Oliver Deng** - [@chronoinferna](https://github.com/chronoinferna)
 
 ## License
 
