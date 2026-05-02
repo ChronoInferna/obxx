@@ -1,5 +1,5 @@
 set(sources
-    src/tmp.cpp
+    src/order_book.cpp
 )
 
 set(exe_sources
@@ -8,7 +8,9 @@ set(exe_sources
 )
 
 set(headers
-    include/obxx/tmp.hpp
+    include/obxx/order_book.hpp
+    include/obxx/order.hpp
+    include/obxx/decimal.hpp
 )
 
 set(test_sources
