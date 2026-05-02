@@ -107,7 +107,7 @@ namespace obxx
     // display or further calculations.
     // Either way, need to decide if we overload the * and / operators or create mul/div functions
     template<int OtherPrecision, int ResultPrecision>
-    constexpr auto operator*(Decimal<OtherPrecision> rhs) const
+    constexpr Decimal<ResultPrecision> operator*(Decimal<OtherPrecision> rhs) const
     {
       constexpr wide_rep scale = pow<ResultPrecision - Precision - OtherPrecision, 10>();
       return Decimal<ResultPrecision>(static_cast<wide_rep>(value_) * rhs.raw() * scale);
