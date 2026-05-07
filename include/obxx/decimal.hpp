@@ -49,20 +49,6 @@ namespace obxx
     constexpr Decimal() : value_(0)
     {
     }
-    /*
-     * @brief Constructs a Decimal from a raw integer representation. The `scale` parameter indicates whether the input
-     * number should be treated as already scaled (i.e., it represents the internal integer value) or if it should be scaled
-     * by 10^Precision. If `scale` is false, the input number is multiplied by 10^Precision to convert it to the internal
-     * representation. If `scale` is true, the input number is used directly as the internal representation without
-     * additional scaling. This allows for flexibility in constructing Decimal instances from both raw integer values and
-     * unscaled numbers.
-     *
-     * @param num The input number to be converted to a Decimal. This can be either a raw integer representation (if `scale`
-     * is true) or an unscaled number (if `scale` is false).
-     * @param scale A boolean flag indicating whether the input number is already scaled (true) or if it should be scaled by
-     * 10^Precision (false). The default value is false, meaning that the input number will be treated as an unscaled value
-     * and will be multiplied by 10^Precision to convert it to the internal representation.
-     */
     explicit constexpr Decimal(rep num, bool is_scaled = false)
         : value_(is_scaled ? num * static_cast<rep>(std::pow(10, Precision)) : num)
     {
@@ -73,6 +59,13 @@ namespace obxx
 
     static constexpr Decimal from_double(double input)
     {
+      // Check for bounds
+      if (input < -static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision) ||
+          input > static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision))
+      {
+        return Decimal(0);
+      }
+
       const double scaled = input * std::pow(10, Precision);
       const rep unscaled = static_cast<rep>(std::round(scaled));
       return Decimal(unscaled);
