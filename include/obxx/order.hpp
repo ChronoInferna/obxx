@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <expected>
 #include <memory>
 
 #include "decimal.hpp"
@@ -32,14 +33,14 @@ namespace obxx
     Decimal<2> price;
     OrderSide side;
     OrderType type;
-    OrderVolume quantity;
+    OrderVolume volume;
   };
 
   struct OrderRequest
   {
     Decimal<2> price;
     OrderSide side;
-    OrderVolume quantity;
+    OrderVolume volume;
     OrderType type;
   };
 
@@ -52,7 +53,7 @@ namespace obxx
     // TODO
     OrderRequestBuilder(Decimal<2> price, OrderSide side, OrderVolume volume, OrderType type);
     // OrderRequestBuilder& method();
-    OrderRequest& build();
+    std::expected<OrderRequest, std::string> build();
   };
 
 }  // namespace obxx
