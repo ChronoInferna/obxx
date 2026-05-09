@@ -53,9 +53,6 @@ namespace obxx
         : value_(is_scaled ? num * static_cast<rep>(std::pow(10, Precision)) : num)
     {
     }
-    explicit constexpr Decimal(double input) : value_(from_double(input).value_)
-    {
-    }
 
     static constexpr Decimal from_double(double input)
     {

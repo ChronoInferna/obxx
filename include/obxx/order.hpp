@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 
 #include "decimal.hpp"
 
@@ -23,7 +24,7 @@ namespace obxx
   };
 
   using OrderId = uint64_t;
-  using OrderQuantity = int64_t;
+  using OrderVolume = int64_t;
 
   struct Order
   {
@@ -31,23 +32,26 @@ namespace obxx
     Decimal<2> price;
     OrderSide side;
     OrderType type;
-    OrderQuantity quantity;
+    OrderVolume quantity;
   };
 
   struct OrderRequest
   {
     Decimal<2> price;
     OrderSide side;
-    OrderQuantity quantity;
+    OrderVolume quantity;
     OrderType type;
   };
 
   class OrderRequestBuilder
   {
    private:
-    OrderRequest* request_;
+    std::unique_ptr<OrderRequest> request_;
 
    public:
+    // TODO
+    OrderRequestBuilder(Decimal<2> price, OrderSide side, OrderVolume volume, OrderType type);
+    // OrderRequestBuilder& method();
     OrderRequest& build();
   };
 

@@ -1,5 +1,6 @@
 set(sources
     src/order_book.cpp
+    src/order.cpp
 )
 
 set(exe_sources
