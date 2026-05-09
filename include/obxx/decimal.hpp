@@ -113,6 +113,12 @@ namespace obxx
       return Decimal(value_ - rhs.value_);
     }
 
+    // Comparison with doubles for convenience
+    constexpr auto operator<=>(double rhs) const
+    {
+      return to_double() <=> rhs;
+    }
+
     template<int ResultPrecision>
     constexpr Decimal<ResultPrecision> round(RoundingMode mode = RoundingMode::HalfEven) const
     {
