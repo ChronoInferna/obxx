@@ -1,13 +1,37 @@
 #pragma once
 
+#include <atomic>
 #include <cstdint>
 #include <expected>
 #include <memory>
+#include <optional>
 
 #include "decimal.hpp"
 
 namespace obxx
 {
+
+  enum class OrderStatus : uint8_t
+  {
+    Unfilled,
+    PartiallyFilled,
+    Filled,
+    Canceled,
+    Rejected,
+    Expired
+  };
+
+  using OrderId = uint64_t;
+  class OrderIdGenerator
+  {
+   private:
+    inline static std::atomic<OrderId> current_id_ = 0;
+
+   public:
+    static OrderId next();
+  };
+
+  using OrderQuantity = int64_t;
 
   enum class OrderSide : uint8_t
   {
@@ -24,24 +48,28 @@ namespace obxx
     Count
   };
 
-  using OrderId = uint64_t;
-  using OrderVolume = int64_t;
+  struct OrderRequest
+  {
+    OrderSide side;
+    OrderQuantity quantity;
+    OrderType type;
+
+    // Optional fields
+    std::optional<Decimal<2>> price;
+  };
 
   struct Order
   {
-    OrderId id;
-    Decimal<2> price;
-    OrderSide side;
-    OrderType type;
-    OrderVolume volume;
-  };
+    OrderStatus status;
 
-  struct OrderRequest
-  {
-    Decimal<2> price;
     OrderSide side;
-    OrderVolume volume;
+    OrderQuantity quantity;
     OrderType type;
+
+    // Optional fields
+    std::optional<Decimal<2>> price;
+
+    Order(const OrderRequest& request);
   };
 
   class OrderRequestBuilder
@@ -50,9 +78,8 @@ namespace obxx
     std::unique_ptr<OrderRequest> request_;
 
    public:
-    // TODO
-    OrderRequestBuilder(Decimal<2> price, OrderSide side, OrderVolume volume, OrderType type);
-    // OrderRequestBuilder& method();
+    OrderRequestBuilder(OrderSide side, OrderQuantity quantity, OrderType type);
+    OrderRequest& price(Decimal<2> price);
     std::expected<OrderRequest, std::string> build();
   };
 
