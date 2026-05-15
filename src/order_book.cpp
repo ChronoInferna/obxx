@@ -1,5 +1,7 @@
 #include "obxx/order_book.hpp"
 
+#include <stdexcept>
+
 namespace obxx
 {
 
@@ -93,7 +95,7 @@ namespace obxx
     bids_[price].add_order(id);
   }
 
-  std::expected<OrderId, std::string> OrderBook::submit_order_request(OrderRequest& request)
+  OrderId OrderBook::submit_order_request(OrderRequest& request)
   {
     if (request.side == OrderSide::Buy)
     {
@@ -105,37 +107,37 @@ namespace obxx
     }
   }
 
-  std::expected<void, std::string> OrderBook::cancel_order(OrderId id)
+  bool OrderBook::cancel_order(OrderId id)
   {
-    return std::unexpected("Unimplemented, cannot cancel order " + std::to_string(id));
+    throw std::runtime_error("Unimplemented, cannot cancel order");
   }
 
   // ====== Buy order handling =====
 
-  std::expected<OrderId, std::string> OrderBook::submit_buy_request(OrderRequest& request)
+  OrderId OrderBook::submit_buy_request(OrderRequest& request)
   {
     switch (request.type)
     {
       case OrderType::Market: return submit_market_buy_request(request);
       case OrderType::Limit:
         // TODO
-        return std::unexpected("Unimplemented, cannot submit limit buy request");
+        throw std::runtime_error("Unimplemented, cannot submit limit buy request");
       case OrderType::Stop:
         // TODO
-        return std::unexpected("Unimplemented, cannot submit stop buy request");
+        throw std::runtime_error("Unimplemented, cannot submit stop buy request");
       case OrderType::StopLimit:
         // TODO
-        return std::unexpected("Unimplemented, cannot submit stop limit buy request");
-      default: return std::unexpected("Invalid order type");
+        throw std::runtime_error("Unimplemented, cannot submit stop limit buy request");
+      default: throw std::runtime_error("Invalid order type");
     }
   }
 
-  std::expected<OrderId, std::string> OrderBook::submit_limit_buy_request(OrderRequest& request)
+  OrderId OrderBook::submit_limit_buy_request(OrderRequest& request)
   {
-    return std::unexpected("Unimplemented, cannot submit limit buy request");
+    throw std::runtime_error("Unimplemented, cannot submit limit buy request");
   }
 
-  std::expected<OrderId, std::string> OrderBook::submit_market_buy_request(OrderRequest& request)
+  OrderId OrderBook::submit_market_buy_request(OrderRequest& request)
   {
     OrderId id = create_order(request);
 
@@ -172,19 +174,19 @@ namespace obxx
 
   // ===== Sell order handling =====
 
-  std::expected<OrderId, std::string> OrderBook::submit_sell_request(OrderRequest& request)
+  OrderId OrderBook::submit_sell_request(OrderRequest& request)
   {
-    return std::unexpected("Unimplemented, cannot submit sell request");
+    throw std::runtime_error("Unimplemented, cannot submit sell request");
   }
 
-  std::expected<OrderId, std::string> OrderBook::submit_limit_sell_request(OrderRequest& request)
+  OrderId OrderBook::submit_limit_sell_request(OrderRequest& request)
   {
-    return std::unexpected("Unimplemented, cannot submit limit sell request");
+    throw std::runtime_error("Unimplemented, cannot submit limit sell request");
   }
 
-  std::expected<OrderId, std::string> OrderBook::submit_market_sell_request(OrderRequest& request)
+  OrderId OrderBook::submit_market_sell_request(OrderRequest& request)
   {
-    return std::unexpected("Unimplemented, cannot submit market sell request");
+    throw std::runtime_error("Unimplemented, cannot submit market sell request");
   }
 
   // ===== Output and query methods =====

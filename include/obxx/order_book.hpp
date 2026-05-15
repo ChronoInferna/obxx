@@ -51,8 +51,8 @@ namespace obxx
 
    public:
     // Input
-    std::expected<OrderId, std::string> submit_order_request(OrderRequest& request);
-    std::expected<void, std::string> cancel_order(OrderId id);
+    OrderId submit_order_request(OrderRequest& request);
+    bool cancel_order(OrderId id);
 
     // Ouput
     std::vector<Event> poll_events(int num_requests) const;  // TODO How to determine how many requests to give?
@@ -68,14 +68,14 @@ namespace obxx
     void add_order_to_bids(OrderId id);
     void add_order_to_asks(OrderId id);
 
-    std::expected<OrderId, std::string> submit_buy_request(OrderRequest& request);
-    std::expected<OrderId, std::string> submit_limit_buy_request(OrderRequest& request);
-    std::expected<OrderId, std::string> submit_market_buy_request(OrderRequest& request);
+    OrderId submit_buy_request(OrderRequest& request);
+    OrderId submit_limit_buy_request(OrderRequest& request);
+    OrderId submit_market_buy_request(OrderRequest& request);
     // TODO add more order types
 
-    std::expected<OrderId, std::string> submit_sell_request(OrderRequest& request);
-    std::expected<OrderId, std::string> submit_limit_sell_request(OrderRequest& request);
-    std::expected<OrderId, std::string> submit_market_sell_request(OrderRequest& request);
+    OrderId submit_sell_request(OrderRequest& request);
+    OrderId submit_limit_sell_request(OrderRequest& request);
+    OrderId submit_market_sell_request(OrderRequest& request);
     // TODO add more order types
   };
 
