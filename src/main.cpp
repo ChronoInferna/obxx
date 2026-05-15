@@ -9,14 +9,15 @@ int main()
   obxx::OrderBook order_book;
 
   // Example usage: submit a market buy order for 100 units and query its status
-  auto request = obxx::OrderRequestBuilder(obxx::OrderType::Market, obxx::OrderSide::Buy, 100).build();
-  if (!request.has_value())
+  auto build_result = obxx::OrderRequestBuilder(obxx::OrderType::Market, obxx::OrderSide::Buy, 100).build();
+  if (!build_result.has_value())
   {
-    std::cerr << "Failed to build order request: " << request.error() << std::endl;
+    std::cerr << "Failed to build order: " << build_result.error() << std::endl;
     return 1;
   }
 
-  auto order_id = order_book.submit_order_request(*request);
+  auto request = build_result.value();
+  auto order_id = order_book.submit_order_request(request);
 
   auto order_query = order_book.query_order_id(order_id);
 
