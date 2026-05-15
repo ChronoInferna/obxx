@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <optional>
 #include <unordered_map>
 #include <variant>
 #include <vector>
@@ -17,7 +16,8 @@ namespace obxx
     std::vector<OrderId> orders;
     OrderQuantity volume;
     uint64_t trade_quantity;
-    std::unordered_map<OrderId, std::unique_ptr<Order>>* orders_map_ptr;  // Pointer for O(1)
+    std::unordered_map<OrderId, std::unique_ptr<Order>>*
+        orders_map_ptr;  // Pointer for O(1) - TODO could this be some sort of view?
 
     void add_order(OrderId id);
     OrderQuantity fill_quantity(OrderQuantity quantity);
@@ -58,10 +58,10 @@ namespace obxx
     std::vector<Event> poll_events(int num_requests) const;  // TODO How to determine how many requests to give?
 
     // Queries
-    std::optional<Decimal<2>> best_bid() const;
-    std::optional<Decimal<2>> best_ask() const;
-    std::optional<Order> query_order_id(OrderId id) const;
-    std::optional<OrderQuantity> volume_at_price(Decimal<2> price) const;
+    std::expected<Decimal<2>, std::string> best_bid() const;
+    std::expected<Decimal<2>, std::string> best_ask() const;
+    std::expected<Order, std::string> query_order_id(OrderId id) const;
+    std::expected<OrderQuantity, std::string> volume_at_price(Decimal<2> price) const;
 
    private:
     OrderId create_order(OrderRequest& request);

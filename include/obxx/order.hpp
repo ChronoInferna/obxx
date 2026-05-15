@@ -21,6 +21,8 @@ namespace obxx
     Expired
   };
 
+  std::string_view to_string(OrderStatus status);
+
   using OrderId = uint64_t;
   class OrderIdGenerator
   {
@@ -29,14 +31,6 @@ namespace obxx
 
    public:
     static OrderId next();
-  };
-
-  using OrderQuantity = int64_t;
-
-  enum class OrderSide : uint8_t
-  {
-    Buy,
-    Sell
   };
 
   enum class OrderType : uint8_t
@@ -48,11 +42,19 @@ namespace obxx
     Count
   };
 
+  enum class OrderSide : uint8_t
+  {
+    Buy,
+    Sell
+  };
+
+  using OrderQuantity = int64_t;
+
   struct OrderRequest
   {
+    OrderType type;
     OrderSide side;
     OrderQuantity quantity;
-    OrderType type;
 
     // Optional fields
     std::optional<Decimal<2>> price;
@@ -62,9 +64,9 @@ namespace obxx
   {
     OrderStatus status;
 
+    OrderType type;
     OrderSide side;
     OrderQuantity quantity;
-    OrderType type;
 
     // Optional fields
     std::optional<Decimal<2>> price;
@@ -78,8 +80,8 @@ namespace obxx
     std::unique_ptr<OrderRequest> request_;
 
    public:
-    OrderRequestBuilder(OrderSide side, OrderQuantity quantity, OrderType type);
-    OrderRequest& price(Decimal<2> price);
+    OrderRequestBuilder(OrderType type, OrderSide side, OrderQuantity quantity);
+    OrderRequestBuilder& price(Decimal<2> price);
     std::expected<OrderRequest, std::string> build();
   };
 

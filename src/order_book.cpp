@@ -195,30 +195,38 @@ namespace obxx
     return {};
   }
 
-  std::optional<Decimal<2>> OrderBook::best_bid() const
+  std::expected<Decimal<2>, std::string> OrderBook::best_bid() const
   {
     if (bids_.empty())
-      return std::nullopt;
+    {
+      return std::unexpected("No bids in order book");
+    }
     return bids_.begin()->first;
   }
 
-  std::optional<Decimal<2>> OrderBook::best_ask() const
+  std::expected<Decimal<2>, std::string> OrderBook::best_ask() const
   {
     if (asks_.empty())
-      return std::nullopt;
+    {
+      return std::unexpected("No asks in order book");
+    }
     return asks_.begin()->first;
   }
 
-  std::optional<Order> OrderBook::query_order_id(OrderId id) const
+  std::expected<Order, std::string> OrderBook::query_order_id(OrderId id) const
   {
     // TODO
-    return std::nullopt;
+    if (orders_.find(id) == orders_.end())
+    {
+      return std::unexpected("Order ID " + std::to_string(id) + " not found");
+    }
+    return *orders_.at(id);
   }
 
-  std::optional<OrderQuantity> OrderBook::volume_at_price(Decimal<2> price) const
+  std::expected<OrderQuantity, std::string> OrderBook::volume_at_price(Decimal<2> price) const
   {
     // TODO
-    return std::nullopt;
+    return std::unexpected("Unimplemented, cannot query volume at price " + price.to_string());
   }
 
 }  // namespace obxx

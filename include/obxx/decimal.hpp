@@ -54,6 +54,7 @@ namespace obxx
     {
     }
 
+    // TODO is it better to just have this as a constructor?
     static constexpr Decimal from_double(double input)
     {
       // Check for bounds
