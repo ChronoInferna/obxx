@@ -78,10 +78,7 @@ to run:
 git clone https://github.com/chronoinferna/obxx/
 ```
 
-## Building the project
-
-To build the project, all you need to do, **_after correctly
-[installing the project](README.md#Installing)_**, is run a similar **CMake** routine
+To build the project, all you need to do is run a similar **CMake** routine
 to the the one below:
 
 ```bash
