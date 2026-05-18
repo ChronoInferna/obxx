@@ -23,6 +23,13 @@ namespace obxx
     return current_id_++;
   }
 
+  OrderRequest::OrderRequest(OrderType request_type, OrderSide request_side, OrderQuantity request_quantity)
+      : type(request_type),
+        side(request_side),
+        quantity(request_quantity)
+  {
+  }
+
   Order::Order(const OrderRequest& request)
       : status(OrderStatus::Unfilled),
         type(request.type),
@@ -34,7 +41,7 @@ namespace obxx
 
   OrderRequestBuilder::OrderRequestBuilder(OrderType type, OrderSide side, OrderQuantity quantity)
   {
-    request_ = std::make_unique<OrderRequest>(type, side, quantity);
+    request_ = std::unique_ptr<OrderRequest>(new OrderRequest{ type, side, quantity });
   }
 
   std::expected<OrderRequest, std::string> OrderRequestBuilder::build()
@@ -62,6 +69,13 @@ namespace obxx
   {
     request_->price = price;
     return *this;
+  }
+
+  std::pair<OrderId, std::unique_ptr<Order>> OrderBuilder::build(const OrderRequest& request)
+  {
+    OrderId id = OrderIdGenerator::next();
+    auto order = std::unique_ptr<Order>(new Order(request));
+    return { id, std::move(order) };
   }
 
 }  // namespace obxx

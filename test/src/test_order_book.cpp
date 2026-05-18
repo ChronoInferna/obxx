@@ -5,6 +5,7 @@
 using obxx::Decimal;
 using obxx::OrderBook;
 using obxx::OrderRequest;
+using obxx::OrderRequestBuilder;
 using obxx::OrderSide;
 using obxx::OrderStatus;
 using obxx::OrderType;
@@ -21,12 +22,8 @@ TEST(OrderBookTest, SubmitLimitBuyAddsOrderToBookAndQueriesSucceed)
 {
   OrderBook book;
 
-  OrderRequest request{
-    .type = OrderType::Limit,
-    .side = OrderSide::Buy,
-    .quantity = 12,
-    .price = Decimal<2>::from_double(100.10),
-  };
+  OrderRequest request =
+      OrderRequestBuilder(OrderType::Limit, OrderSide::Buy, 12).price(Decimal<2>::from_double(100.10)).build().value();
 
   const auto id = book.submit_order_request(request);
   const auto order = book.query_order_id(id);
@@ -48,12 +45,8 @@ TEST(OrderBookTest, CancelExistingBuyOrderMarksCanceledAndRemovesVolume)
 {
   OrderBook book;
 
-  OrderRequest request{
-    .type = OrderType::Limit,
-    .side = OrderSide::Buy,
-    .quantity = 7,
-    .price = Decimal<2>::from_double(101.00),
-  };
+  OrderRequest request =
+      OrderRequestBuilder(OrderType::Limit, OrderSide::Buy, 7).price(Decimal<2>::from_double(101.00)).build().value();
 
   const auto id = book.submit_order_request(request);
   ASSERT_TRUE(book.cancel_order(id));
@@ -83,12 +76,7 @@ TEST(OrderBookTest, QueryMissingOrderAndPriceReturnErrors)
 TEST(OrderBookTest, MarketBuyOnEmptyBookEndsCanceled)
 {
   OrderBook book;
-  OrderRequest request{
-    .type = OrderType::Market,
-    .side = OrderSide::Buy,
-    .quantity = 3,
-    .price = std::nullopt,
-  };
+  OrderRequest request = OrderRequestBuilder(OrderType::Market, OrderSide::Buy, 3).build().value();
 
   const auto id = book.submit_order_request(request);
   const auto order = book.query_order_id(id);

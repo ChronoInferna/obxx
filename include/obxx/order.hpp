@@ -50,6 +50,8 @@ namespace obxx
 
   using OrderQuantity = int64_t;
 
+  class OrderRequestBuilder;
+
   struct OrderRequest
   {
     OrderType type;
@@ -58,7 +60,14 @@ namespace obxx
 
     // Optional fields
     std::optional<Decimal<2>> price;
+
+   private:
+    OrderRequest(OrderType request_type, OrderSide request_side, OrderQuantity request_quantity);
+
+    friend class OrderRequestBuilder;  // Allow builder to access private constructor
   };
+
+  class OrderBuilder;
 
   struct Order
   {
@@ -71,7 +80,10 @@ namespace obxx
     // Optional fields
     std::optional<Decimal<2>> price;
 
-    Order(const OrderRequest& request);
+   private:
+    Order(const OrderRequest& request);  // Private constructor to enforce creation from OrderRequest
+
+    friend class OrderBuilder;  // Allow builder to access private constructor
   };
 
   class OrderRequestBuilder
@@ -83,6 +95,15 @@ namespace obxx
     OrderRequestBuilder(OrderType type, OrderSide side, OrderQuantity quantity);
     OrderRequestBuilder& price(Decimal<2> price);
     std::expected<OrderRequest, std::string> build();
+  };
+
+  class OrderBuilder
+  {
+   public:
+    static std::pair<OrderId, std::unique_ptr<Order>> build(const OrderRequest& request);
+
+   private:
+    OrderBuilder() = default;  // Private constructor to prevent instantiation
   };
 
 }  // namespace obxx
