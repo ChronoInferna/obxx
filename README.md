@@ -8,17 +8,6 @@
 
 ## Features
 
-- Modern **CMake** configuration and project, which, to the best of my
-  knowledge, uses the best practices,
-
-- An example of a **Clang-Format** config, inspired from the base _Google_ model,
-  with minor tweaks. This is aimed only as a starting point, as coding style
-  is a subjective matter, everyone is free to either delete it (for the _LLVM_
-  default) or supply their own alternative,
-
-- **Static analyzers** integration, with _Clang-Tidy_ and _Cppcheck_, the former
-  being the default option,
-
 - **Doxygen** support, through the `ENABLE_DOXYGEN` option, which you can enable
   if you wish to use it,
 
@@ -31,19 +20,8 @@
 - **Package manager support**, with _Conan_ and _Vcpkg_, through their respective
   options
 
-- **CI workflows for Windows, Linux and MacOS** using _GitHub Actions_, making
-  use of the caching features, to ensure minimum run time,
-
-- **.md templates** for: _README_, _Contributing Guideliness_,
-  _Issues_ and _Pull Requests_,
-
 - **Permissive license** to allow you to integrate it as easily as possible. The
   template is licensed under the [Unlicense](https://unlicense.org/),
-
-- Options to build as a header-only library or executable, not just a static or
-  shared library.
-
-- **Ccache** integration, for speeding up rebuild times
 
 ## Getting Started
 
