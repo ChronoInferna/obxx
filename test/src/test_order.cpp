@@ -4,6 +4,7 @@
 
 using obxx::Decimal;
 using obxx::Order;
+using obxx::OrderBuilder;
 using obxx::OrderIdGenerator;
 using obxx::OrderRequest;
 using obxx::OrderRequestBuilder;
@@ -36,14 +37,10 @@ TEST(OrderTest, OrderIdGeneratorMonotonicallyIncrements)
 
 TEST(OrderTest, OrderConstructedFromRequestCopiesRequestFields)
 {
-  OrderRequest request{
-    .type = OrderType::Limit,
-    .side = OrderSide::Buy,
-    .quantity = 42,
-    .price = Decimal<2>::from_double(101.25),
-  };
+  OrderRequest request =
+      OrderRequestBuilder(OrderType::Limit, OrderSide::Buy, 42).price(Decimal<2>::from_double(101.25)).build().value();
 
-  Order order(request);
+  Order order = *(OrderBuilder::build(request).second);
 
   EXPECT_EQ(order.status, OrderStatus::Unfilled);
   EXPECT_EQ(order.type, request.type);
@@ -79,6 +76,7 @@ TEST(OrderTest, OrderRequestBuilderRejectsMarketOrderWithPrice)
 
 TEST(OrderTest, OrderRequestBuilderRejectsInvalidSide)
 {
-  auto request = OrderRequestBuilder(OrderType::Limit, static_cast<OrderSide>(255), 5).price(Decimal<2>::from_double(10.00)).build();
+  auto request =
+      OrderRequestBuilder(OrderType::Limit, static_cast<OrderSide>(255), 5).price(Decimal<2>::from_double(10.00)).build();
   EXPECT_FALSE(request.has_value());
 }

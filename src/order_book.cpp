@@ -81,8 +81,7 @@ namespace obxx
 
   OrderId OrderBook::create_order(OrderRequest& request)
   {
-    auto order = std::make_unique<Order>(request);
-    OrderId order_id = OrderIdGenerator::next();
+    auto [order_id, order] = OrderBuilder::build(request);
     orders_[order_id] = std::move(order);
     return order_id;
   }
