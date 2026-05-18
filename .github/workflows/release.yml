@@ -90,7 +90,7 @@ jobs:
         cd build
         ctest -C "$env:BUILD_TYPE" -VV
 
-    # for a release not containing directly the source code, replace the files archived
+    # for a release not directly containing the source code, replace the files archived
     # with the actual files needed (i.e. *.lib/*.a and *.h(pp))
 
     - name: generate archive (Windows)
