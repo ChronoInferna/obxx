@@ -16,4 +16,6 @@ set(headers
 
 set(test_sources
   src/test_decimal.cpp
+  src/test_order.cpp
+  src/test_order_book.cpp
 )
