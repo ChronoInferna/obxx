@@ -22,6 +22,7 @@ namespace obxx
     void add_order(OrderId id);
     OrderQuantity fill_quantity(OrderQuantity quantity);
     OrderQuantity fill_quantity_single(OrderId id, OrderQuantity quantity);
+    void remove_order(OrderId id);
   };
 
   // TODO how to notify when order is filled?
@@ -58,10 +59,10 @@ namespace obxx
     std::vector<Event> poll_events(int num_requests) const;  // TODO How to determine how many requests to give?
 
     // Queries
-    std::expected<Decimal<2>, std::string> best_bid() const;
-    std::expected<Decimal<2>, std::string> best_ask() const;
+    std::expected<Decimal<2>, std::string> query_best_bid() const;
+    std::expected<Decimal<2>, std::string> query_best_ask() const;
     std::expected<Order, std::string> query_order_id(OrderId id) const;
-    std::expected<OrderQuantity, std::string> volume_at_price(Decimal<2> price) const;
+    std::expected<OrderQuantity, std::string> query_volume_at_price(Decimal<2> price) const;
 
    private:
     OrderId create_order(OrderRequest& request);
