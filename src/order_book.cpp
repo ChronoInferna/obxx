@@ -1,5 +1,6 @@
 #include "obxx/order_book.hpp"
 
+#include <algorithm>
 #include <stdexcept>
 
 namespace obxx
