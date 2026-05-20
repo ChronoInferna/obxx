@@ -1,0 +1,40 @@
+name: Upload Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcovr ninja-build
+
+      - name: Build
+        run: |
+          ./scripts/build.sh
+
+      - name: Run tests
+        working-directory: build
+        run: |
+          ctest --output-on-failure
+
+      - name: Generate coverage report
+        run: |
+          gcovr -r . \
+                --xml-pretty \
+                -o coverage.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v6
+        with:
+          files: coverage.xml
