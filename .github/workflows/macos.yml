@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Checkout
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
     
     - name: Cache dependencies
       uses: actions/cache@v4
@@ -37,7 +37,7 @@ jobs:
         ./scripts/ci_setup.sh
 
     - name: Run tests
-      working-directory: build/Release
+      working-directory: build/${ env.BUILD_TYPE }
       run: |
         ctest --output-on-failure
 
