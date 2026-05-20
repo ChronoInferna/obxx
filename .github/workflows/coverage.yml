@@ -17,14 +17,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcovr ninja-build
+          sudo apt-get install -y gcovr ninja-build python3-pip
 
       - name: Build
         run: |
-          ./scripts/build.sh
+          ./scripts/ci.sh
 
       - name: Run tests
-        working-directory: build
+        working-directory: build/Release
         run: |
           ctest --output-on-failure
 
