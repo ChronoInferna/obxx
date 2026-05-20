@@ -4,9 +4,7 @@ set -euo pipefail
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
-BUILD_DIR="build"
-
-# 1. Install Conan (if not already installed in CI environment)
+# Install Conan
 command -v conan >/dev/null 2>&1 || {
   python3 -m pip install --user conan || {
     echo "Error: Conan is not installed and could not be installed via pip."
@@ -14,17 +12,13 @@ command -v conan >/dev/null 2>&1 || {
   }
 }
 
-# 2. Clean build (CI should be stateless)
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-
-# 3. Install dependencies + generate toolchain
+# Install dependencies + generate toolchain
+conan profile detect --force >/dev/null 2>&1 || true
 conan install . \
-  --build=missing \
-  -s build_type=Release
+  --build=missing
 
-# 4. Configure CMake using preset (preferred)
+# Configure CMake using preset
 cmake --preset conan-release
 
-# 5. Build
+# Build
 cmake --build --preset conan-release --parallel
