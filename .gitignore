@@ -369,3 +369,4 @@ MigrationBackup/
 
 # User-added
 */Testing
+/CMakeUserPresets.json

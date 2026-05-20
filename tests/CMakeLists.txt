@@ -43,7 +43,7 @@ foreach(file ${test_sources})
   endif()
 
   if(${CMAKE_PROJECT_NAME}_USE_GTEST)
-    find_package(GTest REQUIRED)
+    find_package(GTest CONFIG REQUIRED)
 
     if(${CMAKE_PROJECT_NAME}_USE_GOOGLE_MOCK)
       set(GOOGLE_MOCK_LIBRARIES GTest::gmock GTest::gmock_main)
@@ -58,7 +58,7 @@ foreach(file ${test_sources})
         ${${CMAKE_PROJECT_NAME}_TEST_LIB}
     )
   elseif(${CMAKE_PROJECT_NAME}_USE_CATCH2)
-    find_package(Catch2 REQUIRED)
+    find_package(Catch2 CONFIG REQUIRED)
     target_link_libraries(
       ${test_name}_Tests
       PUBLIC
