@@ -6,7 +6,7 @@ cd "$PROJECT_ROOT"
 
 # Install Conan
 command -v conan >/dev/null 2>&1 || {
-  python3 -m pip install --user conan || {
+  python3 -m pip install --break-system-packages --user conan || {
     echo "Error: Conan is not installed and could not be installed via pip."
     exit 1
   }
