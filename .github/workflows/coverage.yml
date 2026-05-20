@@ -32,4 +32,5 @@ jobs:
 
     - name: Generate coverage report
       uses: codecov/codecov-action@v6
-      directory: build/Release
+      with:
+        directory: build/Release
