@@ -29,8 +29,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y ninja-build python3-pip
+        choco install -y ninja python
 
     - name: Build
       run: |
