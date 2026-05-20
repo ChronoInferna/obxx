@@ -4,8 +4,8 @@ set(sources
 )
 
 set(exe_sources
-		src/main.cpp
-		${sources}
+    examples/main.cpp
+    ${sources}
 )
 
 set(headers

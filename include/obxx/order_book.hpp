@@ -17,7 +17,7 @@ namespace obxx
     OrderQuantity volume;
     uint64_t trade_quantity;
     std::unordered_map<OrderId, std::unique_ptr<Order>>*
-        orders_map_ptr;  // Pointer for O(1) - TODO could this be some sort of view?
+        orders_map_ptr;  // Pointer for O(1) - TODO should this be a reference instead?
 
     void add_order(OrderId id);
     OrderQuantity fill_quantity(OrderQuantity quantity);

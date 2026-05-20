@@ -207,7 +207,7 @@ namespace obxx
     OrderId id = create_order(request);
 
     // Determine if it fills
-    if (bids_.empty())
+    if (asks_.empty())
     {
       orders_[id]->status = OrderStatus::Canceled;
     }
@@ -307,7 +307,7 @@ namespace obxx
     OrderId id = create_order(request);
 
     // Determine if it fills
-    if (asks_.empty())
+    if (bids_.empty())
     {
       orders_[id]->status = OrderStatus::Canceled;
     }
@@ -325,8 +325,8 @@ namespace obxx
         else
         {
           // Partially fill
-          orders_[id]->quantity -= price_level.volume;
           price_level.fill_quantity(request.quantity);
+          orders_[id]->quantity -= price_level.volume;
           orders_[id]->status = OrderStatus::PartiallyFilled;
         }
       }
