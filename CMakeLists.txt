@@ -19,7 +19,7 @@ include(cmake/StandardSettings.cmake)
 include(cmake/StaticAnalyzers.cmake)
 include(cmake/Utils.cmake)
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_BUILD_TYPE "Debug")
 endif()
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
@@ -33,11 +33,11 @@ endif (UNIX)
 #
 
 if(${PROJECT_NAME}_USE_ALT_NAMES)
-  string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
-  string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
+    string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
+    string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
 else()
-  set(PROJECT_NAME_LOWERCASE ${PROJECT_NAME})
-  set(PROJECT_NAME_UPPERCASE ${PROJECT_NAME})
+    set(PROJECT_NAME_LOWERCASE ${PROJECT_NAME})
+    set(PROJECT_NAME_UPPERCASE ${PROJECT_NAME})
 endif()
 
 #
@@ -45,7 +45,7 @@ endif()
 #
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
-  message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.\n")
+    message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.\n")
 endif()
 
 #
@@ -56,51 +56,51 @@ endif()
 include(cmake/SourcesAndHeaders.cmake)
 
 if(${PROJECT_NAME}_BUILD_EXECUTABLE)
-  add_executable(${PROJECT_NAME} ${exe_sources})
-
-  if(${PROJECT_NAME}_VERBOSE_OUTPUT)
-    verbose_message("Found the following sources:")
-    foreach(source IN LISTS exe_sources)
-      verbose_message("* ${source}")
-    endforeach()
-  endif()
-
-  if(${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-    add_library(${PROJECT_NAME}_LIB ${headers} ${sources})
+    add_executable(${PROJECT_NAME} ${exe_sources})
 
     if(${PROJECT_NAME}_VERBOSE_OUTPUT)
-      verbose_message("Found the following headers:")
-      foreach(header IN LISTS headers)
-        verbose_message("* ${header}")
-      endforeach()
+        verbose_message("Found the following sources:")
+        foreach(source IN LISTS exe_sources)
+            verbose_message("* ${source}")
+        endforeach()
     endif()
-  endif()
-elseif(${PROJECT_NAME}_BUILD_HEADERS_ONLY)
-  add_library(${PROJECT_NAME} INTERFACE)
 
-  if(${PROJECT_NAME}_VERBOSE_OUTPUT)
-    verbose_message("Found the following headers:")
-    foreach(header IN LIST headers)
-      verbose_message("* ${header}")
-    endforeach()
-  endif()
+    if(${PROJECT_NAME}_ENABLE_UNIT_TESTING)
+        add_library(${PROJECT_NAME}_LIB ${headers} ${sources})
+
+        if(${PROJECT_NAME}_VERBOSE_OUTPUT)
+            verbose_message("Found the following headers:")
+            foreach(header IN LISTS headers)
+                verbose_message("* ${header}")
+            endforeach()
+        endif()
+    endif()
+elseif(${PROJECT_NAME}_BUILD_HEADERS_ONLY)
+    add_library(${PROJECT_NAME} INTERFACE)
+
+    if(${PROJECT_NAME}_VERBOSE_OUTPUT)
+        verbose_message("Found the following headers:")
+        foreach(header IN LIST headers)
+            verbose_message("* ${header}")
+        endforeach()
+    endif()
 else()
-  add_library(
+    add_library(
     ${PROJECT_NAME}
     ${headers}
     ${sources}
   )
 
-  if(${PROJECT_NAME}_VERBOSE_OUTPUT)
-    verbose_message("Found the following sources:")
-    foreach(source IN LISTS sources)
-      verbose_message("* ${source}")
-    endforeach()
-    verbose_message("Found the following headers:")
-    foreach(header IN LISTS headers)
-      verbose_message("* ${header}")
-    endforeach()
-  endif()
+    if(${PROJECT_NAME}_VERBOSE_OUTPUT)
+        verbose_message("Found the following sources:")
+        foreach(source IN LISTS sources)
+            verbose_message("* ${source}")
+        endforeach()
+        verbose_message("Found the following headers:")
+        foreach(header IN LISTS headers)
+            verbose_message("* ${header}")
+        endforeach()
+    endif()
 endif()
 
 set_target_properties(
@@ -111,7 +111,7 @@ set_target_properties(
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}"
 )
 if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-  set_target_properties(
+    set_target_properties(
     ${PROJECT_NAME}_LIB
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE}"
@@ -127,13 +127,13 @@ message(STATUS "Added all header and implementation files.\n")
 #
 
 if(${PROJECT_NAME}_BUILD_HEADERS_ONLY)
-  target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_23)
+    target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_23)
 else()
-  target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
+    target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
 
-  if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-    target_compile_features(${PROJECT_NAME}_LIB PUBLIC cxx_std_23)
-  endif()
+    if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
+        target_compile_features(${PROJECT_NAME}_LIB PUBLIC cxx_std_23)
+    endif()
 endif()
 include(cmake/CompilerWarnings.cmake)
 set_project_warnings(${PROJECT_NAME})
@@ -189,14 +189,14 @@ verbose_message("Successfully added all dependencies and linked against them.")
 
 # Allow usage of header files in the `src` directory, but only for utilities
 if(${PROJECT_NAME}_BUILD_HEADERS_ONLY)
-  target_include_directories(
+    target_include_directories(
     ${PROJECT_NAME}
     INTERFACE
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   )
 else()
-  target_include_directories(
+    target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
     $<INSTALL_INTERFACE:include>
@@ -204,8 +204,8 @@ else()
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
-  if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-    target_include_directories(
+    if(${PROJECT_NAME}_BUILD_EXECUTABLE AND ${PROJECT_NAME}_ENABLE_UNIT_TESTING)
+        target_include_directories(
       ${PROJECT_NAME}_LIB
       PUBLIC
       $<INSTALL_INTERFACE:include>
@@ -213,7 +213,7 @@ else()
       PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
-  endif()
+    endif()
 endif()
 
 message(STATUS "Finished setting up include directories.")
@@ -223,9 +223,9 @@ message(STATUS "Finished setting up include directories.")
 #
 
 if(${PROJECT_NAME}_BUILD_EXECUTABLE)
-  add_executable(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+    add_executable(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 else()
-  add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+    add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 endif()
 
 verbose_message("Project is now aliased as ${PROJECT_NAME}::${PROJECT_NAME}.\n")
@@ -332,16 +332,16 @@ install(
 #
 
 if(${PROJECT_NAME}_GENERATE_EXPORT_HEADER)
-  include(GenerateExportHeader)
-  generate_export_header(${PROJECT_NAME})
-  install(
+    include(GenerateExportHeader)
+    generate_export_header(${PROJECT_NAME})
+    install(
     FILES
     ${PROJECT_BINARY_DIR}/${PROJECT_NAME_LOWERCASE}_export.h
     DESTINATION
     include
   )
 
-  message(STATUS "Generated the export header `${PROJECT_NAME_LOWERCASE}_export.h` and installed it.")
+    message(STATUS "Generated the export header `${PROJECT_NAME_LOWERCASE}_export.h` and installed it.")
 endif()
 
 message(STATUS "Finished building requirements for installing the package.\n")
@@ -351,7 +351,7 @@ message(STATUS "Finished building requirements for installing the package.\n")
 #
 
 if(${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-  enable_testing()
-  message(STATUS "Build unit tests for the project. Tests should always be found in the tests/ folder\n")
-  add_subdirectory(tests)
+    enable_testing()
+    message(STATUS "Build unit tests for the project. Tests should always be found in the tests/ folder\n")
+    add_subdirectory(tests)
 endif()

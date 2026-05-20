@@ -17,41 +17,28 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
+    - name: Checkout
     - uses: actions/checkout@v4
       
-    - name: cache dependencies
+    - name: Cache dependencies
       uses: actions/cache@v4
       id: cache
       with:
         path: ${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
         key: ${{ runner.os }}-dependencies-${{ hashFiles('CMakeLists.txt') }}
 
-    - name: install GoogleTest
-      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+    - name: Install dependencies
       run: |
-        cd ..
-        git clone https://github.com/google/googletest.git --branch v1.17.0
-        cd googletest
-        cmake -Bbuild -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/$INSTALL_LOCATION
-        cmake --build build --config Release
-        cmake --build build --target install --config Release
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-pip
 
-    - name: configure
-      run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/$INSTALL_LOCATION -Dobxx_ENABLE_CODE_COVERAGE=1
-      
-    - name: build
-      run: cmake --build build --config $BUILD_TYPE -j4
-
-    - name: run tests
+    - name: Build
       run: |
-        cd build
-        ctest -C $BUILD_TYPE -VV
+        ./scripts/ci_setup.sh
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        fail_ci_if_error: false
+    - name: Run tests
+      working-directory: build/Release
+      run: |
+        ctest --output-on-failure
 
-    - name: install project
-      run: cmake --build build --target install --config Release 
-
+      # TODO install

@@ -41,7 +41,7 @@ jobs:
           }
 
     steps:
-    - name: set version name (Windows)
+    - name: Set version name (Windows)
       id: version_win
       if: ${{ runner.os == 'Windows' }}
       shell: pwsh
@@ -49,7 +49,7 @@ jobs:
         $TAG = (${env:GITHUB_REF} -replace 'refs/tags/', '')
         echo "name=$TAG" >> ${env:GITHUB_OUTPUT}
     
-    - name: set version name
+    - name: Set version name
       id: version
       if: ${{ runner.os != 'Windows' }}
       run: |
@@ -61,59 +61,50 @@ jobs:
       with:
         submodules: recursive
 
-    - name: cache dependencies
+    - name: Cache dependencies
       uses: actions/cache@v4
       id: cache
       with:
         path: ${{ github.HOME }}/.local
         key: ${{ runner.os }}-dependencies-${{ hashFiles('CMakeLists.txt') }}
 
-    - name: install GoogleTest
-      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+    - name: Install dependencies
       run: |
-        cd ..
-        git clone https://github.com/google/googletest.git --branch v1.17.0
-        cd googletest
-        cmake -Bbuild -DCMAKE_INSTALL_PREFIX="$HOME/.local" -Dgtest_force_shared_crt=1
-        cmake --build build --config Release
-        cmake --build build --target install --config Release
-        cd ../obxx
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-pip
 
-    - name: configure
-      run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX="$HOME/.local"
-      
-    - name: build
-      run: cmake --build build --config "$env:BUILD_TYPE" -j4
-
-    - name: run tests
+    - name: Build
       run: |
-        cd build
-        ctest -C "$env:BUILD_TYPE" -VV
+        ./scripts/ci_setup.sh
+
+    - name: Run tests
+      working-directory: build/Release
+      run: |
+        ctest --output-on-failure
 
     # for a release not directly containing the source code, replace the files archived
     # with the actual files needed (i.e. *.lib/*.a and *.h(pp))
 
-    - name: generate archive (Windows)
+    - name: Generate archive (Windows)
       if: ${{ runner.os == 'Windows' }}
       run: |
         rmdir -r -fo build
         7z a -tzip $HOME/artifact.zip *
 
-
-    - name: generate archive
+    - name: Generate archive
       if: ${{ runner.os != 'Windows' }}
       run: |
         rm -rf build
         tar -cvzf $HOME/artifact.tar.gz .
 
-    - name: upload artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Windows' }}
       with:
         name: ${{ runner.os }}-${{ steps.version_win.outputs.name }}
         path: '~/artifact.*'
 
-    - name: upload artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       if: ${{ runner.os != 'Windows' }}
       with:
@@ -126,11 +117,11 @@ jobs:
     needs: build
 
     steps:
-    - name: set version name
+    - name: Set version name
       id: version
       run: echo ::set-output name=name::${GITHUB_REF#refs/tags/}
 
-    - name: create release
+    - name: Create release
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -143,13 +134,13 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: download artifact
+    - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: "Linux-${{ steps.version.outputs.name }}"
         path: ./
 
-    - name: upload ubuntu release asset
+    - name: Upload ubuntu release asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -159,13 +150,13 @@ jobs:
         asset_name: "${{ env.PROJECT_NAME }}-Linux-${{ steps.version.outputs.name }}.tar.gz"
         asset_content_type: application/x-tar
 
-    - name: download artifact
+    - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: "Windows-${{ steps.version.outputs.name }}"
         path: ./
 
-    - name: upload windows release asset
+    - name: Upload windows release asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -175,13 +166,13 @@ jobs:
         asset_name: "${{ env.PROJECT_NAME }}-Windows-${{ steps.version.outputs.name }}.zip"
         asset_content_type: application/zip
 
-    - name: download artifact
+    - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: "macOS-${{ steps.version.outputs.name }}"
         path: ./
 
-    - name: upload macos release asset
+    - name: Upload macOS release asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
