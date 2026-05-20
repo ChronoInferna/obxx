@@ -1,5 +1,7 @@
 ignore:
-  - "test"
+  - "tests"
+  - "benchmarks"
+  - "examples"
 
 comment:
   require_changes: true
