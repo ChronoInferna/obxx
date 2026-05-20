@@ -6,10 +6,12 @@ cd "$PROJECT_ROOT"
 
 BUILD_DIR="build"
 
-# 1. Ensure Conan is available (CI installs it via pip or package manager)
+# 1. Install Conan (if not already installed in CI environment)
 command -v conan >/dev/null 2>&1 || {
-  echo "Conan not found. Install it in CI environment first."
-  exit 1
+  python3 -m pip install --user conan || {
+    echo "Error: Conan is not installed and could not be installed via pip."
+    exit 1
+  }
 }
 
 # 2. Clean build (CI should be stateless)
