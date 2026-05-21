@@ -25,8 +25,8 @@ conan install . \
 
 # Configure CMake using preset
 echo "Configuring CMake using preset..."
-cmake --preset conan-release
+cmake --preset conan-default
 
 # Build
 echo "Building with CMake preset..."
-cmake --build --preset conan-release --parallel
+cmake --build --preset conan-default --parallel
