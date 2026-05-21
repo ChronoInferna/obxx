@@ -27,4 +27,4 @@ conan install . \
 echo "Done. Now run:"
 echo "  cmake --preset conan-release"
 echo "and then:"
-echo "  cmake --build --preset conan-release"
+echo "  cmake --build build --preset conan-release"

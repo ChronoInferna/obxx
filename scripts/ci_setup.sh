@@ -29,4 +29,4 @@ cmake --preset conan-default
 
 # Build
 echo "Building with CMake preset..."
-cmake --build --preset conan-default --parallel
+cmake --build build --preset conan-default --parallel
