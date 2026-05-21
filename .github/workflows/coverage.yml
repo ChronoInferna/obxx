@@ -27,9 +27,8 @@ jobs:
         ./scripts/ci_setup.sh
 
     - name: Run tests
-      working-directory: build/${{ env.BUILD_TYPE }}
       run: |
-        ctest --output-on-failure
+        cmake --build --preset conan-release --target test
 
     - name: Generate coverage report
       run: |
