@@ -1,6 +1,3 @@
-$PROJECT_ROOT = Split-Path -Parent (Resolve-Path "$PSScriptRoot\..")
-Set-Location $PROJECT_ROOT
-
 # Ensure uv is installed
 Write-Host "Ensuring uv exists..."
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
@@ -16,8 +13,6 @@ uv pip install conan
 # Install dependencies + generate toolchain
 Write-Host "Running conan install..."
 & ".venv\Scripts\Activate.ps1"
-
-ls # List files to verify we're in the right directory
 
 conan profile detect --force | Out-Null
 
