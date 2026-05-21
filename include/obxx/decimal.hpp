@@ -58,8 +58,8 @@ namespace obxx
     static constexpr Decimal from_double(double input)
     {
       // Check for bounds
-      if (input < -static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision) ||
-          input > static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision))
+      if (input > static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision) ||
+          input < static_cast<double>(std::numeric_limits<rep>::min()) / std::pow(10, Precision))
       {
         return Decimal(0);
       }
@@ -78,6 +78,14 @@ namespace obxx
     {
       rep unscaled = value_;
       std::string result;
+
+      if (unscaled == std::numeric_limits<rep>::min())
+      {
+        // Handle the edge case for the minimum representable value
+        result = '-';
+        unscaled = -(unscaled + 1);  // Negate and adjust to avoid overflow
+      }
+
       if (unscaled < 0)
       {
         result += '-';
@@ -99,6 +107,13 @@ namespace obxx
         }
         result += fractional_str;
       }
+
+      // Adjust the last digit to account for the earlier adjustment if necessary
+      if (value_ == std::numeric_limits<rep>::min())
+      {
+        result.back() = static_cast<char>(((result.back() - '0' + 1) % 10) + '0');
+      }
+
       return result;
     }
 
@@ -142,6 +157,8 @@ namespace obxx
             return Decimal<ResultPrecision>(new_unscaled_value + (remainder >= scale_factor / 2 ? 1 : 0));
           case RoundingMode::HalfDown:
             return Decimal<ResultPrecision>(new_unscaled_value + (remainder <= scale_factor / 2 ? 0 : 1));
+          default:
+            // Invalid rounding mode; for safety, we can choose to round down as a fallback
           case RoundingMode::HalfEven:
             [[likely]];
             return Decimal<ResultPrecision>(
@@ -150,10 +167,7 @@ namespace obxx
           case RoundingMode::HalfOdd:
             return Decimal<ResultPrecision>(
                 new_unscaled_value +
-                (remainder > scale_factor / 2 || (remainder == scale_factor / 2 && (new_unscaled_value % 2 != 0)) ? 0 : 1));
-          default:
-            // Invalid rounding mode; for safety, we can choose to round down as a fallback
-            return Decimal<ResultPrecision>(new_unscaled_value);
+                (remainder < scale_factor / 2 || (remainder == scale_factor / 2 && (new_unscaled_value % 2 != 0)) ? 0 : 1));
         }
       }
     }
