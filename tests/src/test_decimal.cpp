@@ -14,14 +14,14 @@ TEST(DecimalTest, DefaultConstructor)
 
 TEST(DecimalTest, Int64Constructor)
 {
-  Decimal<2> d(12345, false);  // represents 123.45
+  Decimal<2> d(12345);  // Represents 123.45
   EXPECT_EQ(d.to_string(), "123.45");
   EXPECT_DOUBLE_EQ(d.to_double(), 123.45);
 }
 
-TEST(DecimalTest, Int64ConstructorScaled)
+TEST(DecimalTest, FromWhole)
 {
-  Decimal<2> d(12345, true);  // represents 12345.00
+  Decimal<2> d = Decimal<2>::from_whole(12345);  // Represents 12345.00
   EXPECT_EQ(d.to_string(), "12345.00");
   EXPECT_DOUBLE_EQ(d.to_double(), 12345.00);
 }
