@@ -38,6 +38,7 @@ jobs:
     - name: Run tests
       working-directory: build\${{ env.BUILD_TYPE }}
       run: |
+        ls |
         ctest --output-on-failure
 
       # TODO install
