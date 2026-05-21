@@ -1,7 +1,7 @@
 [![Actions Status](https://github.com/chronoinferna/obxx/workflows/MacOS/badge.svg)](https://github.com/chronoinferna/obxx/actions)
 [![Actions Status](https://github.com/chronoinferna/obxx/workflows/Windows/badge.svg)](https://github.com/chronoinferna/obxx/actions)
 [![Actions Status](https://github.com/chronoinferna/obxx/workflows/Ubuntu/badge.svg)](https://github.com/chronoinferna/obxx/actions)
-[![codecov](https://codecov.io/gh/chronoinferna/obxx/branch/master/graph/badge.svg)](https://codecov.io/gh/chronoinferna/obxx)
+[![codecov](https://codecov.io/github/ChronoInferna/obxx/graph/badge.svg?token=YY72MZYE4C)](https://codecov.io/github/ChronoInferna/obxx)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/chronoinferna/obxx)](https://github.com/chronoinferna/obxx/releases)
 
 # obxx
