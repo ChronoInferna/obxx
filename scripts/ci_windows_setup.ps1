@@ -16,7 +16,7 @@ Write-Host "Running conan install..."
 
 conan profile detect --force | Out-Null
 
-conan install . --build=missing --output-folder=build
+conan install . --build=missing
 
 # Configure CMake using preset
 Write-Host "Configuring CMake using preset..."
@@ -24,4 +24,4 @@ cmake --preset conan-default
 
 # Build
 Write-Host "Building with CMake preset..."
-cmake --build build --preset conan-release --parallel # For some dumb reason, Windows has differing default configuration and build preset names
+cmake --build build/Release --preset conan-release # For some reason, Windows has differing default configuration and build preset names

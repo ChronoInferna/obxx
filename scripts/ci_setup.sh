@@ -20,8 +20,7 @@ uv pip install conan
 echo "Running conan install..."
 source .venv/bin/activate
 conan profile detect --force >/dev/null 2>&1 || true
-conan install . \
-  --build=missing
+conan install . --build=missing
 
 # Configure CMake using preset
 echo "Configuring CMake using preset..."
@@ -29,4 +28,4 @@ cmake --preset conan-release
 
 # Build
 echo "Building with CMake preset..."
-cmake --build build --preset conan-release --parallel
+cmake --build build/Release --preset conan-release --parallel

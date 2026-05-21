@@ -37,6 +37,7 @@ git clone https://github.com/chronoinferna/obxx/
 ```
 
 To build the project, all you need to do is run:
+
 ```bash
 ./scripts/setup.sh
 cmake --preset conan-release
@@ -46,6 +47,8 @@ cmake --build --preset conan-release
 More options that you can set for the project can be found in the
 [`cmake/StandardSettings.cmake` file](cmake/StandardSettings.cmake). For certain
 options additional configuration may be needed in their respective `*.cmake` files
+
+> **_Note:_** \*Windows might break everything... sorry!\*
 
 ## Running the tests
 
