@@ -32,6 +32,12 @@ jobs:
         ctest --output-on-failure
 
     - name: Generate coverage report
+      run: |
+        gcovr -r . \
+          --xml-pretty \
+          -o coverage.xml
+
+    - name: Upload coverage report
       uses: codecov/codecov-action@v6
       with:
-        directory: build/Release
+        files: coverage.xml
