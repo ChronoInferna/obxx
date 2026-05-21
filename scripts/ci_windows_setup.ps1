@@ -20,8 +20,8 @@ conan install . --build=missing --output-folder=build
 
 # Configure CMake using preset
 Write-Host "Configuring CMake using preset..."
-cmake --preset conan-release
+cmake --preset conan-default
 
 # Build
 Write-Host "Building with CMake preset..."
-cmake --build build --preset conan-release --parallel
+cmake --build build --preset conan-default --parallel
