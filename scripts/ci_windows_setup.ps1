@@ -16,12 +16,18 @@ Write-Host "Running conan install..."
 
 conan profile detect --force | Out-Null
 
-conan install . --build=missing
+conan install . --build=missing --output-folder=build
+
+ls
 
 # Configure CMake using preset
 Write-Host "Configuring CMake using preset..."
 cmake --preset conan-release
 
+ls
+
 # Build
 Write-Host "Building with CMake preset..."
 cmake --build --preset conan-release --parallel
+
+ls
