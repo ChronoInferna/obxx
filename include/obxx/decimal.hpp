@@ -49,17 +49,26 @@ namespace obxx
     constexpr Decimal() : value_(0)
     {
     }
-    explicit constexpr Decimal(rep num, bool is_scaled = false)
-        : value_(is_scaled ? num * static_cast<rep>(std::pow(10, Precision)) : num)
+    explicit constexpr Decimal(rep raw) : value_(raw)
     {
     }
 
-    // TODO is it better to just have this as a constructor?
+    static constexpr Decimal from_whole(rep whole)
+    {
+      // Check for bounds
+      if (whole > (std::numeric_limits<rep>::max() / static_cast<rep>(std::pow(10, Precision))) ||
+          whole < (std::numeric_limits<rep>::lowest() / static_cast<rep>(std::pow(10, Precision))))
+      {
+        return Decimal(0);
+      }
+      return Decimal(whole * static_cast<rep>(std::pow(10, Precision)));
+    }
+
     static constexpr Decimal from_double(double input)
     {
       // Check for bounds
-      if (input > static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision) ||
-          input < static_cast<double>(std::numeric_limits<rep>::min()) / std::pow(10, Precision))
+      if (input > (static_cast<double>(std::numeric_limits<rep>::max()) / std::pow(10, Precision)) ||
+          input < (static_cast<double>(std::numeric_limits<rep>::lowest()) / std::pow(10, Precision)))
       {
         return Decimal(0);
       }
