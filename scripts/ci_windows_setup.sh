@@ -12,8 +12,8 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
 
 # Install Conan in a virtual environment
 Write-Host "Creating venv + installing conan..."
-uv venv .venv
-uv pip install --python .venv\Scripts\python.exe conan
+uv venv
+uv pip install conan
 
 # Install dependencies + generate toolchain
 Write-Host "Running conan install..."

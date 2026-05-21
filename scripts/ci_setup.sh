@@ -13,8 +13,8 @@ command -v uv >/dev/null 2>&1 || {
 
 # Install Conan
 echo "Creating venv + installing conan..."
-uv venv .venv
-uv pip install --python .venv/bin/python conan
+uv venv
+uv pip install conan
 
 # Install dependencies + generate toolchain
 echo "Running conan install..."
