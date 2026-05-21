@@ -40,7 +40,7 @@ jobs:
         dir
 
     - name: Run tests
-      working-directory: build\${{ env.BUILD_TYPE }}
+      working-directory: build
       run: |
         ctest --output-on-failure
 

@@ -24,5 +24,4 @@ cmake --preset conan-default
 
 # Build
 Write-Host "Building with CMake preset..."
-ls build
 cmake --build build --preset conan-release # For some reason, Windows has differing default configuration and build preset names
