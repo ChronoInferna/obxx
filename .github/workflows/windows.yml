@@ -35,13 +35,9 @@ jobs:
       run: |
         .\scripts\ci_windows_setup.ps1
 
-    - name: Debug
-      run: |
-        dir
-
     - name: Run tests
       working-directory: build
       run: |
-        ctest --output-on-failure
+        ctest --output-on-failure -C release
 
       # TODO install

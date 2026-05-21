@@ -1,9 +1,12 @@
 [layout]
 cmake_layout
 
+[requires]
+ninja/1.13.2
+
 [test_requires]
 gtest/1.14.0
 
 [generators]
-CMakeToolchain
 CMakeDeps
+CMakeToolchain
