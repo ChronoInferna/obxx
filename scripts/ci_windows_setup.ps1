@@ -17,9 +17,11 @@ uv pip install conan
 Write-Host "Running conan install..."
 & ".venv\Scripts\Activate.ps1"
 
+ls # List files to verify we're in the right directory
+
 conan profile detect --force | Out-Null
 
-conan install . --output-folder=build --build=missing
+conan install . --build=missing
 
 # Configure CMake using preset
 Write-Host "Configuring CMake using preset..."
