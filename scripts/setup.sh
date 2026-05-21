@@ -19,9 +19,10 @@ uv pip install --python .venv/bin/python conan
 # Install dependencies + generate toolchain
 echo "Running conan install..."
 source .venv/bin/activate
-conan profile detect --force >/dev/null 2>&1 || true
+conan profile detect >/dev/null 2>&1 || true
 conan install . \
-  --build=missing
+  --build=missing \
+  -c tools.cmake.cmaketoolchain:generator=Ninja
 
 # Final instructions
 echo "Done. Now run:"

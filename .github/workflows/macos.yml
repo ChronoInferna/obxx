@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install ninja python3 uv
+        brew install python3 uv
 
     - name: Build
       run: |
