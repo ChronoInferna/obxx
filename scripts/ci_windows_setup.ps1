@@ -1,5 +1,3 @@
-#!/usr/bin/env pwsh
-
 $PROJECT_ROOT = Split-Path -Parent (Resolve-Path "$PSScriptRoot\..")
 Set-Location $PROJECT_ROOT
 

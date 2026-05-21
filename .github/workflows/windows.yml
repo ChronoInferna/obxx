@@ -33,7 +33,7 @@ jobs:
 
     - name: Build
       run: |
-        ./scripts/ci_windows_setup.sh
+        .\scripts\ci_windows_setup.sh
 
     - name: Debug
       run: |
