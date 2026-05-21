@@ -190,7 +190,6 @@ namespace obxx
 // using wide_rep = int64_t;
 // #endif
 //
-//
 // TO DO checked division and multiplication with overflow detection?
 // TO DO unsure of the best way to handle multiplication and division with different precisions. We could either:
 // 1. Require that the result precision is specified by the caller, and perform the necessary scaling to ensure the
